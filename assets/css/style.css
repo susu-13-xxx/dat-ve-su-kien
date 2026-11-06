@@ -1,0 +1,777 @@
+
+/* Cài đặt chung */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f8f7f2;
+    color: #252b35;
+}
+
+.container {
+    width: 85%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* HEADER */
+.header {
+    background: #101d2b;
+    color: white;
+    padding: 22px 0;
+}
+
+.header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+    color: #e9c77b;
+}
+
+.header nav {
+    display: flex;
+    gap: 30px;
+}
+
+.header nav a:hover {
+    color: #e9c77b;
+}
+
+.header-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.register-btn {
+    background: #d9b96e;
+    color: #101d2b;
+    padding: 11px 20px;
+    border-radius: 6px;
+}
+
+/* BANNER */
+.hero {
+    background: #101d2b;
+    color: white;
+    padding: 80px 0;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.hero-text {
+    flex: 1;
+}
+
+.tag {
+    color: #c7a65c;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    line-height: 1.3;
+    margin: 25px 0;
+}
+
+.hero p {
+    color: #c4cbd3;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.main-btn {
+    display: inline-block;
+    background: #d9b96e;
+    color: #101d2b;
+    padding: 15px 25px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.main-btn:hover,
+.register-btn:hover {
+    background: #f0d99e;
+}
+
+.hero-art {
+    flex: 1;
+}
+
+.hero-art img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* TRIỂN LÃM */
+.exhibitions {
+    padding-top: 75px;
+    padding-bottom: 85px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 35px;
+}
+
+.section-heading h2 {
+    font-size: 32px;
+    margin: 12px 0;
+}
+
+.section-heading p {
+    color: #777;
+}
+
+.view-all {
+    color: #a47c30;
+    font-weight: bold;
+}
+
+.event-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.event-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.event-card img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+}
+
+.event-info {
+    padding: 22px;
+}
+
+.event-category {
+    color: #ae8b42;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.event-info h3 {
+    margin: 12px 0;
+    font-size: 19px;
+}
+
+.event-info p {
+    color: #777;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.event-bottom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.event-bottom strong {
+    color: #a47c30;
+}
+
+.event-bottom a {
+    color: #263b53;
+    font-weight: bold;
+}
+
+/* FOOTER */
+.footer {
+    background: #101d2b;
+    color: white;
+    text-align: center;
+    padding: 35px 0;
+}
+
+.footer h3 {
+    color: #e9c77b;
+    margin-bottom: 12px;
+}
+
+.footer p {
+    color: #b9c1ca;
+    margin: 8px 0;
+}
+
+/* TRANG DANH SÁCH TRIỂN LÃM */
+.events-page {
+    padding: 65px 0 85px;
+}
+
+.events-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.events-title h1 {
+    font-size: 38px;
+    margin: 15px 0;
+    color: #101d2b;
+}
+
+.events-title p {
+    color: #777;
+}
+
+/* Thanh tìm kiếm */
+.event-search {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.event-search input,
+.event-search select {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    font-size: 15px;
+    background: white;
+}
+
+.event-search input {
+    flex: 1;
+}
+
+.event-search select {
+    width: 230px;
+}
+
+.event-search input:focus,
+.event-search select:focus {
+    outline: 1px solid #c7a65c;
+    border-color: #c7a65c;
+}
+
+.no-result {
+    text-align: center;
+    color: #777;
+    padding: 40px;
+    font-size: 17px;
+}
+
+
+
+/* TRANG CHI TIẾT TRIỂN LÃM */
+.detail-page {
+    padding: 45px 0 80px;
+}
+
+.detail-banner {
+    height: 380px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    margin-bottom: 45px;
+}
+
+.detail-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(16,29,43,0.9), transparent);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px;
+}
+
+.banner-overlay span {
+    color: #e9c77b;
+    letter-spacing: 2px;
+}
+
+.banner-overlay h1 {
+    font-size: 38px;
+    margin: 18px 0;
+}
+
+.banner-overlay p {
+    color: #eee;
+}
+
+.detail-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 40px;
+}
+
+.detail-content h2,
+.ticket-box h2 {
+    margin-bottom: 20px;
+    color: #101d2b;
+}
+
+.detail-content > p {
+    color: #666;
+    line-height: 1.9;
+    margin-bottom: 30px;
+}
+
+.detail-info {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 35px;
+}
+
+.detail-info div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-info div:last-child {
+    border: none;
+}
+
+.detail-info span {
+    color: #888;
+    font-size: 14px;
+}
+
+.highlight-list {
+    padding-left: 22px;
+    color: #666;
+    line-height: 2.2;
+}
+
+/* HỘP CHỌN VÉ */
+.ticket-box {
+    background: white;
+    padding: 28px;
+    border-radius: 12px;
+    height: fit-content;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+.ticket-note {
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.ticket-option {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 18px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.ticket-option p {
+    color: #888;
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+.ticket-option > strong {
+    color: #a47c30;
+    white-space: nowrap;
+}
+
+.ticket-box label {
+    display: block;
+    margin: 22px 0 9px;
+    font-weight: bold;
+}
+
+.ticket-box select,
+.ticket-box input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: white;
+}
+
+.ticket-total {
+    display: flex;
+    justify-content: space-between;
+    margin: 25px 0;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.ticket-total strong {
+    color: #a47c30;
+    font-size: 20px;
+}
+
+.book-btn {
+    width: 100%;
+    padding: 15px;
+    background: #101d2b;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.book-btn:hover {
+    background: #263b53;
+}
+
+
+
+/* TRANG ĐĂNG NHẬP / ĐĂNG KÝ */
+.auth-page {
+    min-height: 650px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    background: #f1efe8;
+}
+
+.auth-box {
+    width: 100%;
+    max-width: 480px;
+    background: white;
+    padding: 40px;
+    border-radius: 14px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.06);
+}
+
+.auth-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-heading h1 {
+    font-size: 29px;
+    margin: 15px 0;
+    color: #101d2b;
+}
+
+.auth-heading p {
+    color: #888;
+    font-size: 14px;
+}
+
+.auth-box form label {
+    display: block;
+    margin: 18px 0 8px;
+    font-weight: bold;
+    color: #303b48;
+}
+
+.auth-box form input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+.auth-box form input:focus {
+    outline: none;
+    border-color: #c7a65c;
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 7px;
+    background: #101d2b;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auth-btn:hover {
+    background: #263b53;
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 25px;
+    color: #777;
+    font-size: 14px;
+}
+
+.auth-switch a {
+    color: #a47c30;
+    font-weight: bold;
+}
+
+
+/* DETAIL PAGE */
+.detail-banner {
+    position: relative;
+    height: 350px;
+    overflow: hidden;
+    background: #101d2b;
+}
+
+.detail-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(45%);
+}
+
+.detail-banner-content {
+    position: absolute;
+    left: 10%;
+    bottom: 45px;
+    color: white;
+}
+
+.detail-banner-content span {
+    color: #d9b96e;
+    font-weight: bold;
+}
+
+.detail-banner-content h1 {
+    font-size: 36px;
+    margin: 12px 0;
+}
+
+.detail-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 40px;
+    padding-top: 45px;
+    padding-bottom: 60px;
+}
+
+.detail-content h2,
+.ticket-box h2 {
+    color: #101d2b;
+    margin-bottom: 18px;
+}
+
+.detail-content p,
+.detail-content li {
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 12px;
+}
+
+.detail-content ul {
+    padding-left: 22px;
+    margin-bottom: 30px;
+}
+
+.ticket-box {
+    background: white;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    height: fit-content;
+}
+
+.ticket-box label {
+    display: block;
+    margin: 18px 0 8px;
+    font-weight: bold;
+}
+
+.ticket-box select,
+.ticket-box input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.total-price {
+    display: flex;
+    justify-content: space-between;
+    margin: 25px 0;
+    font-size: 17px;
+}
+
+.total-price strong {
+    color: #b18b3d;
+    font-size: 20px;
+}
+
+/* CHECKOUT PAGE */
+.checkout-page {
+    background: #f8f7f2;
+    padding: 50px 0 70px;
+    min-height: 650px;
+}
+
+.checkout-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.checkout-heading h1 {
+    color: #101d2b;
+    margin-bottom: 10px;
+}
+
+.checkout-heading p {
+    color: #777;
+}
+
+.checkout-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.checkout-info,
+.payment-box {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+.checkout-info h2,
+.payment-box h2 {
+    color: #101d2b;
+    margin-bottom: 25px;
+}
+
+.checkout-item,
+.checkout-total {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.checkout-item span,
+.payment-details span {
+    color: #777;
+}
+
+.checkout-item strong {
+    text-align: right;
+}
+
+.checkout-total {
+    margin-top: 10px;
+    border-bottom: none;
+    font-size: 18px;
+}
+
+.checkout-total strong {
+    color: #b18b3d;
+}
+
+.checkout-note {
+    color: #888;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 15px;
+}
+
+.payment-description {
+    color: #777;
+    line-height: 1.6;
+}
+
+.qr-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.qr-wrapper img {
+    width: 220px;
+    height: 220px;
+    object-fit: contain;
+    border: 1px solid #eee;
+    padding: 8px;
+}
+
+.payment-details {
+    background: #f8f7f2;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.payment-details p {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.payment-details strong {
+    text-align: right;
+}
+
+.demo-warning {
+    background: #fff7e5;
+    color: #806322;
+    padding: 13px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 20px;
+}
+
+.back-events-btn {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    padding: 13px;
+    background: #101d2b;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.back-events-btn:hover {
+    background: #263d55;
+}
