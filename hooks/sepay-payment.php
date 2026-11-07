@@ -4,8 +4,8 @@
 
 header("Content-Type: application/json; charset=utf-8");
 
-require_once "../config/database.php";
-require_once "../config/sepay.php";
+require_once __DIR__ . "/../config/database.php";
+require_once __DIR__ . "/../config/sepay.php";
 
 // Chỉ nhận POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
