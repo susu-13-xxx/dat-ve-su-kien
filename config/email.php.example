@@ -1,0 +1,11 @@
+<?php
+// Tao ban sao file nay voi ten email.php va dien thong tin Gmail cua ban.
+// Khong dua email.php len GitHub.
+return [
+    "host" => "smtp.gmail.com",
+    "port" => 587,
+    "username" => "YOUR_GMAIL@gmail.com",
+    "password" => "YOUR_16_CHARACTER_APP_PASSWORD",
+    "from_email" => "YOUR_GMAIL@gmail.com",
+    "from_name" => "ArtTicket"
+];
