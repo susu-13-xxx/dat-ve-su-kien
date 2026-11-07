@@ -1,7 +1,8 @@
-
 <?php
 session_start();
+
 require_once "config/database.php";
+require_once "config/sepay-bank.php";
 
 // Kiểm tra đăng nhập
 if (!isset($_SESSION["user_id"])) {
@@ -12,9 +13,18 @@ if (!isset($_SESSION["user_id"])) {
 $error = "";
 $booking = null;
 $event = null;
+$qrUrl = "";
 
-// Lấy đơn hàng đã tạo nếu có
+// Kiểm tra cấu hình ngân hàng
+$bankConfigValid = (
+    !empty($SEPAY_BANK) &&
+    !empty($SEPAY_ACCOUNT) &&
+    !empty($SEPAY_ACCOUNT_NAME)
+);
+
+// Nếu đã có mã đơn hàng
 if (isset($_GET["booking_code"])) {
+
     $stmt = $conn->prepare("
         SELECT b.*, e.name AS event_name, e.image,
                p.status AS payment_status
@@ -34,6 +44,28 @@ if (isset($_GET["booking_code"])) {
 
     if (!$booking) {
         die("Không tìm thấy đơn đặt vé!");
+    }
+
+    // Tạo QR nếu đơn chưa thanh toán
+    if (
+        $booking["status"] === "pending" &&
+        $booking["payment_status"] === "pending" &&
+        $bankConfigValid
+    ) {
+        // Nội dung chuyển khoản bắt buộc có SEVQR
+        $transferContent = "SEVQR " . $booking["booking_code"];
+
+        $params = [
+            "acc" => $SEPAY_ACCOUNT,
+            "bank" => $SEPAY_BANK,
+            "amount" => (int)$booking["total_amount"],
+            "des" => $transferContent,
+            "template" => "compact",
+            "showinfo" => "true",
+            "holder" => $SEPAY_ACCOUNT_NAME
+        ];
+
+        $qrUrl = "https://vietqr.app/img?" . http_build_query($params);
     }
 
 } else {
@@ -107,7 +139,7 @@ if (isset($_GET["booking_code"])) {
                 (booking_id, transaction_code, amount,
                  payment_method, status)
                 VALUES
-                (:booking_id, :code, :amount, 'SePay', 'pending')";
+                (:booking_id, :code, :amount, 'sepay', 'pending')";
 
             $stmt = $conn->prepare($sql);
 
@@ -119,11 +151,12 @@ if (isset($_GET["booking_code"])) {
 
             $conn->commit();
 
-            // Chuyển hướng để tránh tạo đơn trùng khi tải lại
+            // Chuyển đến trang thanh toán
             header("Location: checkout.php?booking_code=" . urlencode($bookingCode));
             exit;
 
         } catch (Exception $e) {
+
             if ($conn->inTransaction()) {
                 $conn->rollBack();
             }
@@ -147,9 +180,14 @@ include "includes/header.php";
             </p>
         <?php endif; ?>
 
+
         <?php if ($booking): ?>
 
-            <h2>Đặt vé thành công!</h2>
+            <h2>
+                <?php echo $booking["status"] === "paid"
+                    ? "Thanh toán thành công!"
+                    : "Thông tin đơn hàng"; ?>
+            </h2>
 
             <p>Mã đơn hàng:
                 <strong>
@@ -163,11 +201,12 @@ include "includes/header.php";
 
             <p>Loại vé:
                 <?php echo $booking["ticket_type"] === "standard"
-                    ? "Vé tiêu chuẩn" : "Vé đặc biệt"; ?>
+                    ? "Vé tiêu chuẩn"
+                    : "Vé đặc biệt"; ?>
             </p>
 
             <p>Số lượng:
-                <?php echo $booking["quantity"]; ?>
+                <?php echo (int)$booking["quantity"]; ?>
             </p>
 
             <p>Tổng tiền:
@@ -176,14 +215,105 @@ include "includes/header.php";
                 </strong>
             </p>
 
-            <p>Trạng thái đơn hàng: Chờ thanh toán</p>
 
-            <p>
-                Thông tin QR thanh toán và xác nhận thanh toán
-                sẽ được bổ sung ở bước tích hợp SePay.
-            </p>
+            <?php if (
+                $booking["status"] === "paid" ||
+                $booking["payment_status"] === "paid"
+            ): ?>
 
-            <a href="my-tickets.php">Xem vé của tôi</a>
+                <h3 style="color:green;">
+                    Đơn hàng đã được thanh toán!
+                </h3>
+
+                <p>Cảm ơn bạn đã đặt vé.</p>
+
+                <a href="my-tickets.php">Xem vé của tôi</a>
+
+
+            <?php elseif ($booking["status"] === "pending"): ?>
+
+                <h3>Quét mã QR để thanh toán</h3>
+
+                <?php if ($qrUrl !== ""): ?>
+
+                    <div style="text-align:center; margin:20px 0;">
+
+                        <img
+                            src="<?php echo htmlspecialchars($qrUrl, ENT_QUOTES, 'UTF-8'); ?>"
+                            alt="QR thanh toán SePay"
+                            style="width:260px; max-width:100%;"
+                        >
+
+                    </div>
+
+                    <p>
+                        Ngân hàng:
+                        <strong>VietinBank</strong>
+                    </p>
+
+                    <p>
+                        Số tài khoản:
+                        <strong>
+                            <?php echo htmlspecialchars($SEPAY_ACCOUNT); ?>
+                        </strong>
+                    </p>
+
+                    <p>
+                        Chủ tài khoản:
+                        <strong>
+                            <?php echo htmlspecialchars($SEPAY_ACCOUNT_NAME); ?>
+                        </strong>
+                    </p>
+
+                    <p>
+                        Số tiền cần chuyển:
+                        <strong>
+                            <?php echo number_format($booking["total_amount"], 0, ',', '.'); ?>đ
+                        </strong>
+                    </p>
+
+                    <p>
+                        Nội dung chuyển khoản:
+                        <strong>
+                            <?php echo htmlspecialchars(
+                                "SEVQR " . $booking["booking_code"]
+                            ); ?>
+                        </strong>
+                    </p>
+
+                    <p style="color:#d97706;">
+                        Vui lòng chuyển đúng số tiền và nội dung trên.
+                    </p>
+
+                <?php else: ?>
+
+                    <p style="color:red;">
+                        Chưa cấu hình thông tin tài khoản nhận tiền.
+                        Vui lòng kiểm tra config/sepay-bank.php.
+                    </p>
+
+                <?php endif; ?>
+
+                <p style="color:orange;">
+                    Trạng thái: Đang chờ thanh toán
+                </p>
+
+                <button
+                    type="button"
+                    class="auth-btn"
+                    onclick="location.reload()"
+                >
+                    Kiểm tra trạng thái thanh toán
+                </button>
+
+            <?php else: ?>
+
+                <p>Trạng thái đơn hàng:
+                    <?php echo htmlspecialchars($booking["status"]); ?>
+                </p>
+
+            <?php endif; ?>
+
 
         <?php else: ?>
 
@@ -195,7 +325,8 @@ include "includes/header.php";
 
             <p>Loại vé:
                 <?php echo $ticketType === "standard"
-                    ? "Vé tiêu chuẩn" : "Vé đặc biệt"; ?>
+                    ? "Vé tiêu chuẩn"
+                    : "Vé đặc biệt"; ?>
             </p>
 
             <p>Số lượng: <?php echo $quantity; ?></p>
@@ -210,18 +341,29 @@ include "includes/header.php";
             </h3>
 
             <form method="POST">
-                <input type="hidden" name="event_id"
-                       value="<?php echo htmlspecialchars($eventId); ?>">
 
-                <input type="hidden" name="ticket_type"
-                       value="<?php echo htmlspecialchars($ticketType); ?>">
+                <input
+                    type="hidden"
+                    name="event_id"
+                    value="<?php echo htmlspecialchars($eventId); ?>"
+                >
 
-                <input type="hidden" name="quantity"
-                       value="<?php echo $quantity; ?>">
+                <input
+                    type="hidden"
+                    name="ticket_type"
+                    value="<?php echo htmlspecialchars($ticketType); ?>"
+                >
+
+                <input
+                    type="hidden"
+                    name="quantity"
+                    value="<?php echo $quantity; ?>"
+                >
 
                 <button type="submit" class="auth-btn">
                     Tạo đơn hàng
                 </button>
+
             </form>
 
         <?php endif; ?>
