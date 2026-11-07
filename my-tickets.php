@@ -100,25 +100,17 @@ include "includes/header.php";
                                 </strong>
                             </p>
 
-                            <p>
-                                Trạng thái đơn hàng:
-                                <strong>
-                                    <?php
-                                    echo $ticket["status"] === "paid"
-                                        ? "Đã thanh toán"
-                                        : "Chờ thanh toán";
-                                    ?>
-                                </strong>
-                            </p>
-
-                            <p>
-                                Trạng thái thanh toán:
-                                <?php
-                                echo $ticket["payment_status"] === "paid"
-                                    ? "Đã thanh toán"
-                                    : "Chưa thanh toán";
-                                ?>
-                            </p>
+                            <?php if ($ticket["status"] === "paid" && $ticket["payment_status"] === "paid"): ?>
+                                <div style="margin-top:15px; padding:12px; border-radius:8px; background:#e8f7ee; color:#18733b;">
+                                    <strong>✓ Thanh toán thành công</strong>
+                                    <p style="margin:5px 0 0;">Vé của bạn đã được xác nhận. Hãy lưu lại mã đơn hàng khi cần tra cứu.</p>
+                                </div>
+                            <?php else: ?>
+                                <div style="margin-top:15px; padding:12px; border-radius:8px; background:#fff7e6; color:#9a6700;">
+                                    <strong>Đang chờ thanh toán</strong>
+                                    <p style="margin:5px 0 0;">Đơn hàng sẽ được xác nhận sau khi hệ thống nhận được khoản thanh toán.</p>
+                                </div>
+                            <?php endif; ?>
 
                         </div>
                     </div>
