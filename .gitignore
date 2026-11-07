@@ -1,2 +1,4 @@
 /config/sepay.php
 /config/sepay-bank.php
+/config/email.php
+/vendor/
