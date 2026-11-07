@@ -221,13 +221,12 @@ include "includes/header.php";
                 $booking["payment_status"] === "paid"
             ): ?>
 
-                <h3 style="color:green;">
-                    Đơn hàng đã được thanh toán!
-                </h3>
+                <div role="status" style="margin:18px 0; padding:16px; border-radius:10px; background:#e8f7ee; color:#18733b;">
+                    <h3 style="margin:0 0 8px;">✓ Thanh toán thành công!</h3>
+                    <p style="margin:0;">ArtTicket đã nhận được thanh toán và xác nhận đơn hàng của bạn.</p>
+                </div>
 
-                <p>Cảm ơn bạn đã đặt vé.</p>
-
-                <a href="my-tickets.php">Xem vé của tôi</a>
+                <a href="my-tickets.php" class="auth-btn" style="display:inline-block; text-decoration:none; text-align:center;">Xem vé của tôi</a>
 
 
             <?php elseif ($booking["status"] === "pending"): ?>
@@ -297,6 +296,17 @@ include "includes/header.php";
                 <p style="color:orange;">
                     Trạng thái: Đang chờ thanh toán
                 </p>
+
+                <p style="font-size:14px; color:#666;">
+                    Trang sẽ tự kiểm tra trạng thái thanh toán sau mỗi 8 giây. Sau khi SePay xác nhận, thông báo thành công sẽ tự hiển thị.
+                </p>
+
+                <script>
+                    // Tự tải lại để nhận trạng thái mới từ webhook SePay.
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 8000);
+                </script>
 
                 <button
                     type="button"
