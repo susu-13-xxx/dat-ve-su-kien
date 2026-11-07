@@ -19,12 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 // Đọc dữ liệu gốc
 $body = file_get_contents("php://input");
-file_put_contents(
-    __DIR__ . "/webhook-debug.log",
-    date("Y-m-d H:i:s") . " | POST RECEIVED\n",
-    FILE_APPEND
-);
-
 $signature = $_SERVER["HTTP_X_SEPAY_SIGNATURE"] ?? "";
 $timestamp = (int)($_SERVER["HTTP_X_SEPAY_TIMESTAMP"] ?? 0);
 
@@ -44,36 +38,14 @@ $expected = "sha256=" . hash_hmac(
 );
 
 
-file_put_contents(
-    __DIR__ . "/webhook-debug.log",
-    "HMAC CHECK REACHED\n",
-    FILE_APPEND
-);
 if (!hash_equals($expected, $signature)) {
-    file_put_contents(
-        __DIR__ . "/webhook-debug.log",
-        "HMAC FAILED\n",
-        FILE_APPEND
-    );
-
-    http_response_code(401);
+    
+http_response_code(401);
     exit;
 }
 
-file_put_contents(
-    __DIR__ . "/webhook-debug.log",
-    "HMAC PASSED\n",
-    FILE_APPEND
-);
-
 // Đọc JSON
 $data = json_decode($body, true);
-
-file_put_contents(
-    __DIR__ . "/webhook-debug.log",
-    "DATA: " . json_encode($data, JSON_UNESCAPED_UNICODE) . "\n",
-    FILE_APPEND
-);
 
 if (!is_array($data)) {
     http_response_code(400);
