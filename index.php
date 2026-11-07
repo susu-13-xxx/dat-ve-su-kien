@@ -52,8 +52,8 @@
                 <p>📅 15/12/2026 - 15/01/2027</p>
 
                 <div class="event-bottom">
-                    <strong>Từ 150.000đ</strong>
-                    <a href="event-detail.php">Chi tiết →</a>
+                    <strong>Từ 15.000đ</strong>
+                    <a href="event-detail.php?id=vangogh">Chi tiết →</a>
                 </div>
             </div>
         </div>
@@ -69,8 +69,8 @@
                 <p>📅 20/12/2026 - 20/01/2027</p>
 
                 <div class="event-bottom">
-                    <strong>Từ 100.000đ</strong>
-                    <a href="event-detail.php">Chi tiết →</a>
+                    <strong>Từ 10.000đ</strong>
+                    <a href="event-detail.php?id=colors">Chi tiết →</a>
                 </div>
             </div>
         </div>
@@ -86,8 +86,8 @@
                 <p>📅 25/12/2026 - 25/01/2027</p>
 
                 <div class="event-bottom">
-                    <strong>Từ 120.000đ</strong>
-                    <a href="event-detail.php">Chi tiết →</a>
+                    <strong>Từ 12.000đ</strong>
+                    <a href="event-detail.php?id=lightspace">Chi tiết →</a>
                 </div>
             </div>
         </div>
