@@ -65,6 +65,8 @@ try {
             b.ticket_type,
             b.quantity,
             b.total_amount,
+            b.status AS booking_status,
+            p.status AS payment_status,
             u.name AS customer_name,
             u.email AS customer_email,
             e.name AS event_name,
@@ -75,8 +77,6 @@ try {
         JOIN users u ON u.id = b.user_id
         JOIN events e ON e.id = b.event_id
         WHERE b.booking_code = :code
-          AND b.status = 'pending'
-          AND p.status = 'pending'
         FOR UPDATE
     ");
     $stmt->execute(["code" => $bookingCode]);
@@ -86,6 +86,27 @@ try {
         $conn->rollBack();
         http_response_code(400);
         echo json_encode(["success" => false, "message" => "Booking or amount mismatch"]);
+        exit;
+    }
+
+    // SePay co the gui lai webhook. Don da thanh toan dung so tien
+    // thi tra thanh cong, khong cap nhat va khong gui email lan nua.
+    if (
+        $booking["booking_status"] === "paid" &&
+        $booking["payment_status"] === "paid"
+    ) {
+        $conn->commit();
+        echo json_encode(["success" => true, "message" => "Payment already confirmed"]);
+        exit;
+    }
+
+    if (
+        $booking["booking_status"] !== "pending" ||
+        $booking["payment_status"] !== "pending"
+    ) {
+        $conn->rollBack();
+        http_response_code(409);
+        echo json_encode(["success" => false, "message" => "Booking is not payable"]);
         exit;
     }
 
