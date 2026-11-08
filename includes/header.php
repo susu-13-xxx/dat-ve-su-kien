@@ -11,21 +11,24 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArtTicket - Đặt vé triển lãm nghệ thuật</title>
-    <?php $isAdminPage = strpos($_SERVER['SCRIPT_NAME'] ?? '', '/admin/') !== false; ?>
-    <link rel="stylesheet" href="<?php echo $isAdminPage ? '../assets/css/style.css' : 'assets/css/style.css'; ?>?v=20261109">
+    <?php
+    $isAdminPage = strpos($_SERVER['SCRIPT_NAME'] ?? '', '/admin/') !== false;
+    $basePath = $isAdminPage ? '../' : '';
+    ?>
+    <link rel="stylesheet" href="<?php echo $basePath; ?>assets/css/style.css?v=20261109">
 </head>
 <body>
 
 <header class="header">
     <div class="container">
-        <a href="index.php" class="logo">ArtTicket.</a>
+        <a href="<?php echo $basePath; ?>index.php" class="logo">ArtTicket.</a>
 
         <nav>
-            <a href="index.php">Trang chủ</a>
-            <a href="events.php">Triển lãm</a>
-            <a href="my-tickets.php">Vé của tôi</a>
+            <a href="<?php echo $basePath; ?>index.php">Trang chủ</a>
+            <a href="<?php echo $basePath; ?>events.php">Triển lãm</a>
+            <a href="<?php echo $basePath; ?>my-tickets.php">Vé của tôi</a>
             <?php if (($_SESSION["user_role"] ?? "user") === "admin"): ?>
-                <a href="admin/index.php">Quản trị</a>
+                <a href="<?php echo $isAdminPage ? 'index.php' : 'admin/index.php'; ?>">Quản trị</a>
             <?php endif; ?>
         </nav>
 
@@ -37,12 +40,12 @@ if (session_status() === PHP_SESSION_NONE) {
                     <?php echo htmlspecialchars($_SESSION["user_name"]); ?>
                 </span>
 
-                <a href="logout.php" class="login-btn">Đăng xuất</a>
+                <a href="<?php echo $basePath; ?>logout.php" class="login-btn">Đăng xuất</a>
 
             <?php else: ?>
 
-                <a href="login.php" class="login-btn">Đăng nhập</a>
-                <a href="register.php" class="register-btn">Đăng ký</a>
+                <a href="<?php echo $basePath; ?>login.php" class="login-btn">Đăng nhập</a>
+                <a href="<?php echo $basePath; ?>register.php" class="register-btn">Đăng ký</a>
 
             <?php endif; ?>
         </div>
