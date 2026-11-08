@@ -31,7 +31,7 @@ $tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 include __DIR__ . "/../includes/header.php";
 ?>
-<main class="events-page">
+<main class="events-page admin-page">
     <div class="container">
         <h1 class="events-title">Quản lý vé</h1>
         <p style="margin-bottom:20px;"><a href="index.php">← Quay lại tổng quan</a></p>
