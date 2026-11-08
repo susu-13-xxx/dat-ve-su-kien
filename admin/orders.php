@@ -14,7 +14,7 @@ $stmt = $conn->query("
 $orders=$stmt->fetchAll(PDO::FETCH_ASSOC);
 include __DIR__ . "/../includes/header.php";
 ?>
-<main class="events-page"><div class="container"><h1 class="events-title">Quản lý đơn đặt vé</h1>
+<main class="events-page admin-page"><div class="container"><h1 class="events-title">Quản lý đơn đặt vé</h1>
 <p style="margin-bottom:20px;"><a href="index.php">← Quay lại tổng quan</a></p>
 <div style="background:white;padding:24px;border-radius:12px;overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:1000px;">
 <thead><tr style="text-align:left;background:#f8f7f2;"><th style="padding:12px;">Mã đơn</th><th>Khách hàng</th><th>Email</th><th>Sự kiện</th><th>Số vé</th><th>Tổng tiền</th><th>Thanh toán</th><th>Ngày đặt</th></tr></thead><tbody>
