@@ -2,3 +2,4 @@
 /config/sepay-bank.php
 /config/email.php
 /vendor/
+/config/ticket-scanner.php
