@@ -69,6 +69,12 @@ include __DIR__ . "/../includes/header.php";
     <div class="container">
         <h1 class="events-title">Quản trị ArtTicket</h1>
         <p style="text-align:center;margin-bottom:30px;">Xin chào quản trị viên <?php echo htmlspecialchars($_SESSION["user_name"]); ?>!</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:25px;">
+            <a class="register-btn" href="events.php">Quản lý sự kiện</a>
+            <a class="register-btn" href="orders.php">Quản lý đơn đặt vé</a>
+            <a class="register-btn" href="tickets.php">Quản lý vé</a>
+            <a class="register-btn" href="../scan-ticket.php">Cổng kiểm soát vé</a>
+        </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px;margin-bottom:30px;">
             <?php
             $stats = [
@@ -90,7 +96,7 @@ include __DIR__ . "/../includes/header.php";
             <?php endforeach; ?>
         </div>
         <div style="background:white;padding:24px;border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,.05);margin-bottom:25px;">
-            <h2 style="margin-bottom:8px;">Doanh thu 6 tháng gần nhất</h2>
+            <h2 style="margin-bottom:8px;">Doanh thu</h2>
             <p style="color:#777;margin-bottom:20px;font-size:14px;">Chỉ tính các đơn đã thanh toán, theo ngày tạo đơn.</p>
             <div style="display:grid;gap:14px;">
                 <?php foreach ($monthlyStats as $month): ?>
@@ -107,14 +113,8 @@ include __DIR__ . "/../includes/header.php";
                 <?php endforeach; ?>
             </div>
         </div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:25px;">
-            <a class="register-btn" href="events.php">Quản lý sự kiện</a>
-            <a class="register-btn" href="orders.php">Quản lý đơn đặt vé</a>
-            <a class="register-btn" href="tickets.php">Quản lý vé</a>
-            <a class="register-btn" href="../scan-ticket.php">Cổng kiểm soát vé</a>
-        </div>
         <div style="background:white;padding:24px;border-radius:12px;overflow-x:auto;">
-            <h2 style="margin-bottom:18px;">Đơn đặt vé gần đây</h2>
+            <h2 style="margin-bottom:18px;">Đơn đặt vé</h2>
             <table style="width:100%;border-collapse:collapse;min-width:700px;">
                 <thead><tr style="text-align:left;background:#f8f7f2;">
                     <th style="padding:12px;">Mã đơn</th><th>Khách hàng</th><th>Sự kiện</th><th>Số vé</th><th>Tổng tiền</th><th>Trạng thái</th>
