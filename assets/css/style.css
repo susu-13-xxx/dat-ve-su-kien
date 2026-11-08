@@ -1339,3 +1339,126 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     .auth-box { padding: 28px 22px; }
     .ticket-box, .checkout-info, .payment-box { padding: 23px; }
 }
+
+
+/* =====================================================
+   ARTTICKET ADMIN — PREMIUM DASHBOARD
+   ===================================================== */
+.admin-page {
+    background:
+        radial-gradient(circle at 8% 0%, rgba(180,154,103,.10), transparent 27%),
+        var(--art-paper);
+    min-height: 72vh;
+}
+.admin-page > .container { max-width: 1240px; }
+.admin-page .events-title {
+    text-align: left;
+    font-size: clamp(30px, 3vw, 39px);
+    margin-bottom: 10px;
+}
+.admin-page .container > p { text-align: left; }
+.admin-page .container > p a {
+    color: #8d7549;
+    font-size: 14px;
+    font-weight: 650;
+    text-decoration: none;
+}
+.admin-page .container > p a:hover { color: var(--art-deep); }
+.admin-page .container > div[style*="background:white"],
+.admin-page .container > div[style*="background: white"] {
+    background: var(--art-white) !important;
+    border: 1px solid var(--art-line) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 30px rgba(39,43,35,.055) !important;
+}
+.admin-page h2 {
+    color: var(--art-deep);
+    font: 500 24px/1.35 Georgia, "Times New Roman", serif;
+}
+.admin-page table { width: 100%; }
+.admin-page table thead th {
+    padding: 15px 13px !important;
+    background: #f1eee5 !important;
+    color: #465348 !important;
+    white-space: nowrap;
+    letter-spacing: .2px;
+}
+.admin-page table tbody td {
+    padding: 14px 13px !important;
+    border-top: 1px solid var(--art-line);
+    vertical-align: middle;
+}
+.admin-page table tbody tr { transition: background .18s ease; }
+.admin-page table tbody tr:hover { background: #faf8f2; }
+.admin-page table td strong { color: var(--art-deep); }
+.admin-page form label {
+    display: block;
+    margin: 17px 0 7px;
+    color: #465348;
+    font-size: 13px;
+    font-weight: 700;
+}
+.admin-page form input:not([type="hidden"]),
+.admin-page form textarea,
+.admin-page form select {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px 14px !important;
+    color: var(--art-ink);
+    background: #fffefa;
+    border: 1px solid #ded9ce !important;
+    border-radius: 9px !important;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+.admin-page form input:focus,
+.admin-page form textarea:focus,
+.admin-page form select:focus {
+    outline: none;
+    border-color: var(--art-gold) !important;
+    box-shadow: 0 0 0 3px rgba(180,154,103,.13);
+}
+.admin-page .auth-btn {
+    width: auto;
+    min-width: 150px;
+    padding: 12px 23px;
+    margin-top: 20px;
+    font-size: 14px;
+}
+.admin-page .register-btn {
+    text-decoration: none;
+    font-size: 13px;
+}
+.admin-page button[type="submit"] { cursor: pointer; }
+.admin-page form[method="GET"] {
+    padding: 14px;
+    background: var(--art-white);
+    border: 1px solid var(--art-line);
+    border-radius: 13px;
+}
+.admin-page form[method="GET"] .auth-btn { margin-top: 0; }
+.admin-page form[method="GET"] input { flex: 1; min-width: 220px; }
+.admin-page .admin-status,
+.admin-page .status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 30px;
+    background: #edf3eb;
+    color: #48634b;
+    font-size: 12px;
+    font-weight: 700;
+}
+.admin-page .admin-stat strong {
+    display: block;
+    color: #9b8253 !important;
+    font: 600 27px/1.25 Georgia, "Times New Roman", serif;
+}
+.admin-page .admin-stat p { color: var(--art-muted) !important; font-size: 13px; }
+@media (max-width: 640px) {
+    .admin-page { padding: 38px 0 55px; }
+    .admin-page .events-title { font-size: 29px; }
+    .admin-page .container > div[style*="background:white"],
+    .admin-page .container > div[style*="background: white"] { padding: 17px !important; }
+    .admin-page table { min-width: 700px; }
+    .admin-page .auth-btn { width: 100%; }
+    .admin-page form[method="GET"] { padding: 12px; }
+}
