@@ -1,0 +1,5 @@
+<?php
+// Sao chep file nay thanh config/ticket-scanner.php va dat mat khau rieng, dai va kho doan.
+return [
+    "password" => "CHANGE_THIS_TO_A_LONG_RANDOM_PASSWORD"
+];
