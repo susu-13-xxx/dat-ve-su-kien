@@ -48,7 +48,7 @@ if (isset($_GET["edit"])) {
 $events = $conn->query("SELECT * FROM events ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
 include __DIR__ . "/../includes/header.php";
 ?>
-<main class="events-page"><div class="container">
+<main class="events-page admin-page"><div class="container">
 <h1 class="events-title">Quản lý sự kiện</h1>
 <p style="margin-bottom:20px;"><a href="index.php">← Quay lại tổng quan</a></p>
 <?php if ($error): ?><p style="color:#b42318;"><?php echo htmlspecialchars($error); ?></p><?php endif; ?>
