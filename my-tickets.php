@@ -103,8 +103,44 @@ include "includes/header.php";
                             <?php if ($ticket["status"] === "paid" && $ticket["payment_status"] === "paid"): ?>
                                 <div style="margin-top:15px; padding:12px; border-radius:8px; background:#e8f7ee; color:#18733b;">
                                     <strong>✓ Thanh toán thành công</strong>
-                                    <p style="margin:5px 0 0;">Vé của bạn đã được xác nhận. Hãy lưu lại mã đơn hàng khi cần tra cứu.</p>
+                                    <p style="margin:5px 0 0;">Vé của bạn đã được xác nhận.</p>
                                 </div>
+
+                                <?php
+                                $ticketStmt = $conn->prepare("
+                                    SELECT ticket_code, status, issued_at
+                                    FROM tickets
+                                    WHERE booking_id = :booking_id
+                                    ORDER BY id ASC
+                                ");
+                                $ticketStmt->execute(["booking_id" => $ticket["id"]]);
+                                $issuedTickets = $ticketStmt->fetchAll(PDO::FETCH_ASSOC);
+                                ?>
+
+                                <?php if ($issuedTickets): ?>
+                                    <div style="margin-top:16px;">
+                                        <h4>Vé điện tử của bạn</h4>
+                                        <?php foreach ($issuedTickets as $index => $issuedTicket): ?>
+                                            <?php
+                                            $qrData = "ARTTICKET:" . $issuedTicket["ticket_code"];
+                                            $qrUrl = "https://api.qrserver.com/v1/create-qr-code/?" . http_build_query([
+                                                "size" => "180x180",
+                                                "data" => $qrData
+                                            ]);
+                                            ?>
+                                            <div style="margin:12px 0; padding:14px; border:1px solid #ddd; border-radius:10px; text-align:center;">
+                                                <strong>Vé số <?php echo $index + 1; ?></strong>
+                                                <div style="margin:10px;">
+                                                    <img src="<?php echo htmlspecialchars($qrUrl, ENT_QUOTES, "UTF-8"); ?>" alt="Mã QR vé điện tử" width="180" height="180">
+                                                </div>
+                                                <p>Mã vé: <strong><?php echo htmlspecialchars($issuedTicket["ticket_code"]); ?></strong></p>
+                                                <p style="margin:4px 0;">Trạng thái: <?php echo htmlspecialchars($issuedTicket["status"]); ?></p>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php else: ?>
+                                    <p style="margin-top:12px;">Vé điện tử đang được khởi tạo. Vui lòng tải lại trang sau ít phút.</p>
+                                <?php endif; ?>
                             <?php else: ?>
                                 <div style="margin-top:15px; padding:12px; border-radius:8px; background:#fff7e6; color:#9a6700;">
                                     <strong>Đang chờ thanh toán</strong>
