@@ -23,6 +23,9 @@ if (session_status() === PHP_SESSION_NONE) {
             <a href="index.php">Trang chủ</a>
             <a href="events.php">Triển lãm</a>
             <a href="my-tickets.php">Vé của tôi</a>
+            <?php if (($_SESSION["user_role"] ?? "user") === "admin"): ?>
+                <a href="admin/index.php">Quản trị</a>
+            <?php endif; ?>
         </nav>
 
         <div class="header-actions">
