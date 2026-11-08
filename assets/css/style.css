@@ -775,3 +775,195 @@ a {
 .back-events-btn:hover {
     background: #263d55;
 }
+
+/* NÚT ĐĂNG NHẬP */
+.login-btn {
+    display: inline-block;
+    color: white;
+    padding: 10px 16px;
+    border: 1px solid rgba(255,255,255,.35);
+    border-radius: 6px;
+    transition: .2s ease;
+}
+.login-btn:hover {
+    color: #e9c77b;
+    border-color: #e9c77b;
+}
+
+/* HIỆU ỨNG VÀ TRẠNG THÁI TƯƠNG TÁC */
+.event-card {
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+.event-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,.10);
+}
+button, input, select, textarea {
+    font: inherit;
+}
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid #c7a65c;
+    outline-offset: 3px;
+}
+
+/* RESPONSIVE: TABLET */
+@media (max-width: 900px) {
+    .container {
+        width: 92%;
+    }
+    .header .container {
+        flex-wrap: wrap;
+        gap: 18px;
+    }
+    .header nav {
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+    .hero {
+        padding: 55px 0;
+    }
+    .hero h1 {
+        font-size: 38px;
+    }
+    .hero-content {
+        gap: 28px;
+    }
+    .event-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .detail-layout,
+    .checkout-layout {
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+    }
+}
+
+/* RESPONSIVE: ĐIỆN THOẠI */
+@media (max-width: 640px) {
+    .container {
+        width: 90%;
+    }
+    .header {
+        padding: 16px 0;
+    }
+    .header .container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+    .logo {
+        font-size: 25px;
+    }
+    .header nav {
+        width: 100%;
+        gap: 12px 18px;
+        flex-wrap: wrap;
+        font-size: 14px;
+    }
+    .header-actions {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 10px;
+        font-size: 14px;
+    }
+    .hero {
+        padding: 42px 0;
+    }
+    .hero-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 30px;
+    }
+    .hero h1 {
+        font-size: 32px;
+        margin: 18px 0;
+    }
+    .hero-art img {
+        height: 230px;
+    }
+    .exhibitions {
+        padding-top: 48px;
+        padding-bottom: 55px;
+    }
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 16px;
+    }
+    .section-heading h2 {
+        font-size: 26px;
+    }
+    .event-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    .event-card img {
+        height: 220px;
+    }
+    .events-page,
+    .checkout-page {
+        padding-top: 38px;
+        padding-bottom: 50px;
+    }
+    .events-title h1,
+    .banner-overlay h1,
+    .detail-banner-content h1 {
+        font-size: 28px;
+    }
+    .event-search {
+        flex-direction: column;
+    }
+    .event-search select {
+        width: 100%;
+    }
+    .detail-banner {
+        height: 260px;
+        border-radius: 10px;
+    }
+    .detail-banner-content {
+        left: 6%;
+        right: 6%;
+        bottom: 25px;
+    }
+    .banner-overlay {
+        padding: 25px;
+    }
+    .detail-layout,
+    .checkout-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .detail-layout {
+        padding-top: 28px;
+        padding-bottom: 40px;
+    }
+    .ticket-box,
+    .checkout-info,
+    .payment-box,
+    .auth-box {
+        padding: 22px;
+    }
+    .auth-page {
+        min-height: auto;
+        padding: 40px 16px;
+    }
+    .auth-heading h1 {
+        font-size: 25px;
+    }
+    .qr-wrapper img {
+        width: min(220px, 100%);
+        height: auto;
+    }
+    .footer {
+        padding: 28px 0;
+    }
+}
+
+/* TÔN TRỌNG THIẾT LẬP GIẢM CHUYỂN ĐỘNG */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+    }
+}
