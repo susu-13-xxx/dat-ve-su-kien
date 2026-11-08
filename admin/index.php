@@ -50,6 +50,7 @@ include __DIR__ . "/../includes/header.php";
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:25px;">
             <a class="register-btn" href="events.php">Quản lý sự kiện</a>
             <a class="register-btn" href="orders.php">Quản lý đơn đặt vé</a>
+            <a class="register-btn" href="tickets.php">Quản lý vé</a>
             <a class="register-btn" href="../scan-ticket.php">Cổng kiểm soát vé</a>
         </div>
         <div style="background:white;padding:24px;border-radius:12px;overflow-x:auto;">
