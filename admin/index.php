@@ -65,7 +65,7 @@ $latestBookings = $latestStmt->fetchAll(PDO::FETCH_ASSOC);
 
 include __DIR__ . "/../includes/header.php";
 ?>
-<main class="events-page">
+<main class="events-page admin-page">
     <div class="container">
         <h1 class="events-title">Quản trị ArtTicket</h1>
         <p style="text-align:center;margin-bottom:30px;">Xin chào quản trị viên <?php echo htmlspecialchars($_SESSION["user_name"]); ?>!</p>
@@ -83,7 +83,7 @@ include __DIR__ . "/../includes/header.php";
             ];
             foreach ($stats as $stat):
             ?>
-                <div style="background:white;padding:22px;border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,.05);">
+                <div class="admin-stat" style="background:white;padding:22px;border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,.05);">
                     <p style="color:#777;margin-bottom:10px;"><?php echo htmlspecialchars($stat[0]); ?></p>
                     <strong style="font-size:24px;color:#a47c30;"><?php echo htmlspecialchars((string)$stat[1]); ?></strong>
                 </div>
