@@ -91,10 +91,33 @@ try {
 
     // SePay co the gui lai webhook. Don da thanh toan dung so tien
     // thi tra thanh cong, khong cap nhat va khong gui email lan nua.
+    // Tao du mot ve rieng cho moi ve trong don, ke ca don da paid tu truoc.
+    // Ma ve duoc sinh ngau nhien va khong trung lap.
+    $issueMissingTickets = function () use ($conn, $booking): void {
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM tickets WHERE booking_id = :id");
+        $stmt->execute(["id" => $booking["id"]]);
+        $existingCount = (int)$stmt->fetchColumn();
+        $missingCount = max(0, (int)$booking["quantity"] - $existingCount);
+
+        $insert = $conn->prepare("
+            INSERT INTO tickets (booking_id, ticket_code, status)
+            VALUES (:booking_id, :ticket_code, 'valid')
+        ");
+
+        for ($i = 0; $i < $missingCount; $i++) {
+            $ticketCode = "TKT-" . strtoupper(bin2hex(random_bytes(8)));
+            $insert->execute([
+                "booking_id" => $booking["id"],
+                "ticket_code" => $ticketCode
+            ]);
+        }
+    };
+
     if (
         $booking["booking_status"] === "paid" &&
         $booking["payment_status"] === "paid"
     ) {
+        $issueMissingTickets();
         $conn->commit();
         echo json_encode(["success" => true, "message" => "Payment already confirmed"]);
         exit;
@@ -123,6 +146,9 @@ try {
         WHERE id = :id AND status = 'pending'
     ");
     $stmt->execute(["id" => $booking["id"]]);
+
+    // Moi booking tao dung so ve tuong ung voi so luong da mua.
+    $issueMissingTickets();
 
     $conn->commit();
 
