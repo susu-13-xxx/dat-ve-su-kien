@@ -247,7 +247,7 @@ include "includes/header.php";
 
                     <p>
                         Ngân hàng:
-                        <strong>VietinBank</strong>
+                        <strong><?php echo htmlspecialchars($SEPAY_BANK); ?></strong>
                     </p>
 
                     <p>
