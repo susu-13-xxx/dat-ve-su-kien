@@ -11,7 +11,8 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArtTicket - Đặt vé triển lãm nghệ thuật</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <?php $isAdminPage = strpos($_SERVER['SCRIPT_NAME'] ?? '', '/admin/') !== false; ?>
+    <link rel="stylesheet" href="<?php echo $isAdminPage ? '../assets/css/style.css' : 'assets/css/style.css'; ?>?v=20261109">
 </head>
 <body>
 
