@@ -30,6 +30,28 @@ $stmt->execute([
 
 $tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Bo sung ve cho cac don da thanh toan tu truoc khi tinh nang ve dien tu duoc them.
+$findTickets = $conn->prepare("SELECT COUNT(*) FROM tickets WHERE booking_id = :id");
+$createTicket = $conn->prepare("
+    INSERT INTO tickets (booking_id, ticket_code, status)
+    VALUES (:booking_id, :ticket_code, 'valid')
+");
+foreach ($tickets as $booking) {
+    if ($booking["status"] !== "paid" || $booking["payment_status"] !== "paid") {
+        continue;
+    }
+
+    $findTickets->execute(["id" => $booking["id"]]);
+    $missing = max(0, (int)$booking["quantity"] - (int)$findTickets->fetchColumn());
+
+    for ($i = 0; $i < $missing; $i++) {
+        $createTicket->execute([
+            "booking_id" => $booking["id"],
+            "ticket_code" => "TKT-" . strtoupper(bin2hex(random_bytes(8)))
+        ]);
+    }
+}
+
 include "includes/header.php";
 ?>
 
