@@ -90,7 +90,7 @@ try {
         exit;
     }
 
-    // Tao du mot ve rieng cho moi ve trong don, tranh tao trung ve.
+    // Tao du mot ve rieng cho moi ve trong don.
     $issueMissingTickets = function () use ($conn, $booking): void {
         $stmt = $conn->prepare("SELECT COUNT(*) FROM tickets WHERE booking_id = :id");
         $stmt->execute(["id" => $booking["id"]]);
@@ -111,8 +111,8 @@ try {
         }
     };
 
-    // Chi danh dau da gui email khi PHPMailer gui thanh cong.
-    // Neu gui that bai, email_sent_at van NULL de webhook lan sau thu lai.
+    // Chi danh dau email da gui khi PHPMailer gui thanh cong.
+    // Neu gui that bai, email_sent_at van NULL de webhook sau co the thu lai.
     $sendEmailIfNeeded = function () use ($conn, $booking): void {
         if (!empty($booking["email_sent_at"])) {
             return;
@@ -127,12 +127,11 @@ try {
                 WHERE id = :id AND email_sent_at IS NULL
             ");
             $stmt->execute(["id" => $booking["id"]]);
-        } else {
-            error_log("ArtTicket email: Chua gui duoc email cho don " . $booking["booking_code"]);
         }
     };
 
-    // Neu don da paid tu truoc: van thu gui lai email neu lan truoc that bai.
+    // Webhook gui lai: don da paid thi khong cap nhat thanh toan/tao ve trung,
+    // nhung van thu gui email neu lan truoc chua gui thanh cong.
     if (
         $booking["booking_status"] === "paid" &&
         $booking["payment_status"] === "paid"
@@ -171,9 +170,10 @@ try {
     $stmt->execute(["id" => $booking["id"]]);
 
     $issueMissingTickets();
+
     $conn->commit();
 
-    // Gui email sau khi da luu trang thai thanh toan.
+    // Thanh toan da duoc ghi nhan; loi email khong lam huy thanh toan.
     $sendEmailIfNeeded();
 
     echo json_encode(["success" => true, "message" => "Payment confirmed"]);
