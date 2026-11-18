@@ -66,6 +66,7 @@ try {
             b.quantity,
             b.total_amount,
             b.status AS booking_status,
+            b.email_sent_at,
             p.status AS payment_status,
             u.name AS customer_name,
             u.email AS customer_email,
@@ -89,10 +90,7 @@ try {
         exit;
     }
 
-    // SePay co the gui lai webhook. Don da thanh toan dung so tien
-    // thi tra thanh cong, khong cap nhat va khong gui email lan nua.
-    // Tao du mot ve rieng cho moi ve trong don, ke ca don da paid tu truoc.
-    // Ma ve duoc sinh ngau nhien va khong trung lap.
+    // Tao du mot ve rieng cho moi ve trong don, tranh tao trung ve.
     $issueMissingTickets = function () use ($conn, $booking): void {
         $stmt = $conn->prepare("SELECT COUNT(*) FROM tickets WHERE booking_id = :id");
         $stmt->execute(["id" => $booking["id"]]);
@@ -113,12 +111,37 @@ try {
         }
     };
 
+    // Chi danh dau da gui email khi PHPMailer gui thanh cong.
+    // Neu gui that bai, email_sent_at van NULL de webhook lan sau thu lai.
+    $sendEmailIfNeeded = function () use ($conn, $booking): void {
+        if (!empty($booking["email_sent_at"])) {
+            return;
+        }
+
+        require_once __DIR__ . "/../includes/send-ticket-email.php";
+
+        if (sendTicketConfirmation($booking)) {
+            $stmt = $conn->prepare("
+                UPDATE bookings
+                SET email_sent_at = NOW()
+                WHERE id = :id AND email_sent_at IS NULL
+            ");
+            $stmt->execute(["id" => $booking["id"]]);
+        } else {
+            error_log("ArtTicket email: Chua gui duoc email cho don " . $booking["booking_code"]);
+        }
+    };
+
+    // Neu don da paid tu truoc: van thu gui lai email neu lan truoc that bai.
     if (
         $booking["booking_status"] === "paid" &&
         $booking["payment_status"] === "paid"
     ) {
         $issueMissingTickets();
         $conn->commit();
+
+        $sendEmailIfNeeded();
+
         echo json_encode(["success" => true, "message" => "Payment already confirmed"]);
         exit;
     }
@@ -147,14 +170,11 @@ try {
     ");
     $stmt->execute(["id" => $booking["id"]]);
 
-    // Moi booking tao dung so ve tuong ung voi so luong da mua.
     $issueMissingTickets();
-
     $conn->commit();
 
-    // Gui email sau khi da commit. Loi email khong lam huy thanh toan.
-    require_once __DIR__ . "/../includes/send-ticket-email.php";
-    sendTicketConfirmation($booking);
+    // Gui email sau khi da luu trang thai thanh toan.
+    $sendEmailIfNeeded();
 
     echo json_encode(["success" => true, "message" => "Payment confirmed"]);
 } catch (Throwable $e) {
